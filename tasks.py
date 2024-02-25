@@ -56,10 +56,10 @@ class CustomTasks:
                 f"""
             **Task**: Develop a 7-Day Travel Itinerary
             **Description**: Expand the city guide into a full 7-day travel itinerary with detailed per-day plans, 
-            including weather forecasts, places to eat, packing suggestions, and a budget breakdown.  You MUST suggest
-            actual places to visit, actual hotels to stay, and actual restaurants to go to.  This itinerary should cover all
-            aspects of the trip from arrival to departure, integrating the city guide information with practical 
-            travel logistics.
+                including weather forecasts, places to eat, packing suggestions, and a budget breakdown.  You MUST suggest
+                actual places to visit, actual hotels to stay, and actual restaurants to go to.  This itinerary should cover all
+                aspects of the trip from arrival to departure, integrating the city guide information with practical 
+                travel logistics.
             
             **Parameters**:
            - City: {city}
@@ -78,10 +78,10 @@ class CustomTasks:
                 f"""
             **Task**: Identify the best city for the trip
             **Description**: Analyze and select the best city for the trip based on specific criteria such as weather
-            patterns, seasonal events, and travel costs.  This task involves comparing multiple cities, considering
-            factors like current weather conditions, upcoming cultural or seasonal events and overall travel expenses.
-            Your final answer must be a detailed report on the chosen city, including actual flight costs, weather forecasts
-            and attractions.
+                patterns, seasonal events, and travel costs.  This task involves comparing multiple cities, considering
+                factors like current weather conditions, upcoming cultural or seasonal events and overall travel expenses.
+                Your final answer must be a detailed report on the chosen city, including actual flight costs, weather forecasts
+                and attractions.
             
             **Parameters**:
            - Origin: {origin}
