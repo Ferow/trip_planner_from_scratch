@@ -1,9 +1,8 @@
 from crewai import Agent
 from textwrap import dedent
-from langchain.llms import OpenAI, Ollama
-from langchain_openai import ChatOpenAI
-
-
+from Tools.search_tools import SearchTools
+from Tools.calculator_tools import CalculatorTools
+from openai import OpenAI
 """
 Creating Agents Cheat Sheet:
 - Think like a boss. Work backwards from the goal and think which employee 
@@ -31,14 +30,13 @@ Notes:
 - Backstory should be their resume
 """
 
-# This is an example of how to define custom agents.
-# You can define as many agents as you want.
-# You can also define custom tasks in tasks.py
-class CustomAgents:
+class TravelAgents:
     def __init__(self):
-        self.OpenAIGPT35 = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
-        self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
-        self.Ollama = Ollama(model="openhermes")
+        # Point to the local server
+        self.OpenAIClient = OpenAI(base_url="http://localhost:3280/v1", api_key="not-needed")
+        #self.OpenAIGPT35 = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
+        #self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
+        #self.Ollama = Ollama(model="openhermes")
 
     def expert_travel_agent(self):
         return Agent(
@@ -47,10 +45,12 @@ class CustomAgents:
                              Expert and creating plans and logistics for traveling the world."""),
             goal=dedent(f"""Create a 7-day travel itinerary with detailed per-day plans, 
                         including budget, packing suggestions, and safety tips."""),
-            # tools=[tool_1, tool_2],
-            allow_delegation=False,
+            tools=[
+                SearchTools.search_interet,
+                CalculatorTools.calculate
+                ],
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.OpenAIClient,
         )
 
     def city_selection_expert(self):
@@ -62,10 +62,11 @@ class CustomAgents:
             goal=dedent(f"""Find the best cities to travel to based on 
                              weather, budghet, season, prices and client preferences.
                         """),
-            # tools=[tool_1, tool_2],
-            allow_delegation=False,
+             tools=[
+                SearchTools.search_interet
+                ],
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.OpenAIClient,
         )
         
     def local_tour_guide(self):
@@ -75,8 +76,9 @@ class CustomAgents:
                              """),
             goal=dedent(f"""Provide the BEST insights of the selected city to the client.
                         """),
-            # tools=[tool_1, tool_2],
-            allow_delegation=False,
+             tools=[
+                SearchTools.search_interet
+                ],
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.OpenAIClient,
         )
