@@ -40,22 +40,41 @@ class CustomAgents:
         self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
         self.Ollama = Ollama(model="openhermes")
 
-    def agent_1_name(self):
+    def expert_travel_agent(self):
         return Agent(
-            role="Define agent 1 role here",
-            backstory=dedent(f"""Define agent 1 backstory here"""),
-            goal=dedent(f"""Define agent 1 goal here"""),
+            role="Expert Travel Agent",
+            backstory=dedent(f"""A world traveler with 20 years of experience in the travel industry. 
+                             Expert and creating plans and logistics for traveling the world."""),
+            goal=dedent(f"""Create a 7-day travel itinerary with detailed per-day plans, 
+                        including budget, packing suggestions, and safety tips."""),
             # tools=[tool_1, tool_2],
             allow_delegation=False,
             verbose=True,
             llm=self.OpenAIGPT35,
         )
 
-    def agent_2_name(self):
+    def city_selection_expert(self):
         return Agent(
-            role="Define agent 2 role here",
-            backstory=dedent(f"""Define agent 2 backstory here"""),
-            goal=dedent(f"""Define agent 2 goal here"""),
+            role="City Selection Expert",
+            backstory=dedent(f"""A city selection expert with 10 years of experience in the travel industry.
+                             Expert in finding the best cities to travel to based on client preferences.
+                             """),
+            goal=dedent(f"""Find the best cities to travel to based on 
+                             weather, budghet, season, prices and client preferences.
+                        """),
+            # tools=[tool_1, tool_2],
+            allow_delegation=False,
+            verbose=True,
+            llm=self.OpenAIGPT35,
+        )
+        
+    def local_tour_guide(self):
+        return Agent(
+            role="Local Tour Guide",
+            backstory=dedent(f"""Expert of the city who has extensive knowledge the history, culture, and best places to visit.
+                             """),
+            goal=dedent(f"""Provide the BEST insights of the selected city to the client.
+                        """),
             # tools=[tool_1, tool_2],
             allow_delegation=False,
             verbose=True,
