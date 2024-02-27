@@ -2,7 +2,16 @@ from crewai import Agent
 from textwrap import dedent
 from Tools.search_tools import SearchTools
 from Tools.calculator_tools import CalculatorTools
-from openai import OpenAI
+from langchain_openai import ChatOpenAI
+import os
+
+llmurl = os.environ['OPEN_AI_URL']
+llm_api_key = os.environ['OPEN_AI_KEY']
+# Create an instance of the OpenAIWrapper
+local_openai_client = ChatOpenAI(
+    base_url=llmurl, api_key=llm_api_key, temperature=0.4
+)
+
 """
 Creating Agents Cheat Sheet:
 - Think like a boss. Work backwards from the goal and think which employee 
@@ -29,11 +38,14 @@ Notes:
 - Goals should actionable
 - Backstory should be their resume
 """
+from openai import OpenAI
+
+# Point to the local server
 
 class TravelAgents:
-    def __init__(self):
+    #def __init__(self):
         # Point to the local server
-        self.OpenAIClient = OpenAI(base_url="http://localhost:3280/v1", api_key="not-needed")
+        #self.OpenAIClient = OpenAI(base_url="http://localhost:3280/v1", api_key="not-needed")
         #self.OpenAIGPT35 = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
         #self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
         #self.Ollama = Ollama(model="openhermes")
@@ -41,16 +53,17 @@ class TravelAgents:
     def expert_travel_agent(self):
         return Agent(
             role="Expert Travel Agent",
-            backstory=dedent(f"""A world traveler with 20 years of experience in the travel industry. 
-                             Expert and creating plans and logistics for traveling the world."""),
-            goal=dedent(f"""Create a 7-day travel itinerary with detailed per-day plans, 
-                        including budget, packing suggestions, and safety tips."""),
+            backstory="""A world traveler with 20 years of experience in the travel industry. 
+                             Expert and creating plans and logistics for traveling the world.""",
+            goal="""Create a 7-day travel itinerary with detailed per-day plans, 
+                        including budget, packing suggestions, and safety tips.""",
             tools=[
                 SearchTools.search_interet,
                 CalculatorTools.calculate
                 ],
-            verbose=True,
-            llm=self.OpenAIClient,
+            llm=local_openai_client,
+            verbose=True
+            #self.OpenAIClient,
         )
 
     def city_selection_expert(self):
@@ -62,11 +75,13 @@ class TravelAgents:
             goal=dedent(f"""Find the best cities to travel to based on 
                              weather, budghet, season, prices and client preferences.
                         """),
-             tools=[
+            tools=[
                 SearchTools.search_interet
                 ],
-            verbose=True,
-            llm=self.OpenAIClient,
+            llm=local_openai_client,
+            verbose=True
+            
+            #llm=self.OpenAIClient,
         )
         
     def local_tour_guide(self):
@@ -76,9 +91,10 @@ class TravelAgents:
                              """),
             goal=dedent(f"""Provide the BEST insights of the selected city to the client.
                         """),
-             tools=[
+            tools=[
                 SearchTools.search_interet
                 ],
-            verbose=True,
-            llm=self.OpenAIClient,
+            llm=local_openai_client,
+            verbose=True
+            #llm=self.OpenAIClient,
         )

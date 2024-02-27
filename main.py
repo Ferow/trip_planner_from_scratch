@@ -1,10 +1,8 @@
 import os
 from crewai import Agent, Task, Crew, Process
-from langchain_openai import ChatOpenAI
 from textwrap import dedent
 from agents import TravelAgents
 from tasks import TravelTasks
-
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -16,12 +14,9 @@ load_dotenv()
 
 #search_tool = DuckDuckGoSearchRun()
 
-#os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
-#os.environ["OPENAI_ORGANIZATION"] = config("OPENAI_ORGANIZATION_ID")
 
 # This is the main class that you will use to define your custom crew.
 # You can define as many agents and tasks as you want in agents.py and tasks.py
-
 
 class TripCrew:
     def __init__(self, origin, cities, date_range, interests):
@@ -50,9 +45,11 @@ class TripCrew:
         
         identify_city_task = tasks.identify_city(
             city_expert_agent, 
+            self.origin,
             self.cities,
-            self.date_range,
-            self.interests
+            self.interests,
+            self.date_range
+            
         )
         
         gather_city_info_task = tasks.gather_city_info(
